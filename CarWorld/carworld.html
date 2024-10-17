@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <center>
+        <h1 style="color: rgb(56, 56, 249); margin-top: 40px;">Car World</h1>
+    </center>
+    <div class="container">
+        <div class="row">
+            <div class="col-4" style="box-shadow: 0 4px 8px 0; height: 400px; width: 300px;">
+                <h2 style="color: rgb(56, 56, 249); margin-top: 30px;">Enter Details</h2>
+                <label style="margin-top: 40px; margin-right: 120px;" for="">Car Brand</label><br>
+                <input style="border-radius: 3px;" id="cbrand" type="text" placeholder="car brand"><br>
+                <label style="margin-right: 150px;" for="">Price</label><br>
+                <input style="border-radius: 3px;" id="cprice" type="text" placeholder="price"><br>
+                <label style="margin-right: 150px;">Key</label><br>
+                <input style="border-radius: 3px;" id="ckey" type="text" placeholder="key"><br>
+                <button type="button" onclick="storeRecord()" class="btn btn-success" style="margin-top: 20px;">Store
+                    records</button>
+            </div>
+
+            <div class="col-4"
+                style="box-shadow: 0 4px 8px 0; height: 400px; width: 300px; margin-top:0px; margin-left: 20px;">
+                <h2 style="color: rgb(56, 56, 249); margin-top: 30px;">Enter Key To Retrieve Item</h2>
+                <label style="margin-top: 40px; margin-right: 150px;" for="">key</label><br>
+                <input style="border-radius: 3px;" id="retrieve" type="text" placeholder="Key"><br>
+                <button type="button" onclick="retrieveRecord()" class="btn btn-primary"
+                    style="margin-top: 20px;">Retrieve records</button>
+                <div id="ddd">
+
+                </div>
+            </div>
+
+            <div class="col-4"
+                style="box-shadow: 0 4px 8px 0; height: 400px; width: 400px; margin-top: -400px; margin-left: 800px;">
+                <h2 style="color: rgb(56, 56, 249); margin-top: 30px;">Enter Key To Delete Item</h2>
+                <label style="margin-top: 50px; margin-right: 150px;" for="">key</label><br>
+                <input style="border-radius: 3px;" id="dele" type="text" placeholder="Key"><br>
+                <button type="button" onclick="removeRecord()" class="btn btn-danger" style="margin-top: 20px;">Remove
+                    records</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <button type="button" onclick="clea()"
+        style="width: 1200px; margin-left: 30px; height: 50px; font-size: larger; margin-top: 20px;">Clear All
+        Records</button>
+    </div>
+    <script>
+        function storeRecord() {
+            const recordData = {
+                carbrand: cbrand.value,
+                price: cprice.value,
+                key: ckey.value
+            }
+            console.log(recordData);
+            if (recordData.carbrand == "" || recordData.price == "" || recordData.key == "") {
+                alert('please fill your details')
+            } if (recordData.key in localStorage) {
+                alert('data already exist')
+            } else {
+                localStorage.setItem(recordData.key, JSON.stringify(recordData));
+                alert("data addedd successfully")
+            }
+        }
+
+        function retrieveRecord() {
+
+            rdata = document.getElementById("retrieve").value;
+            console.log(rdata);
+            if (rdata in localStorage) {
+
+                datas = JSON.parse(localStorage.getItem(rdata))
+                console.log(datas);
+                ddd.innerHTML = `
+        <p>car brand : ${datas.carbrand}</p>
+        <p>car price : ${datas.price}</p>
+        <p>key : ${datas.key}</p>
+        `
+            } else {
+                ddd.innerHTML = `
+            No existing data`
+            }
+        }
+        function removeRecord(){
+                del = dele.value;
+                console.log(del);
+                if(del in localStorage){
+                    localStorage.removeItem(del)
+                    alert('removed successfully')
+                }else{
+                    alert('No data found')
+                }
+                
+            }
+            function clea(){
+                localStorage.clear();
+                alert('datas cleared successfully')
+
+            }
+    </script>
+</body>
+</html>
